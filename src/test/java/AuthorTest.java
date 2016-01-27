@@ -48,4 +48,22 @@ public class AuthorTest {
     assertTrue(firstAuthor.equals(secondAuthor));
   }
 
+  @Test
+  public void getAllBooks_ListsAllBooksRelatedToAuthor() {
+    Author author = new Author("Potter", "Beatrix");
+    author.save();
+    Book firstBook = new Book("The Tale Peter Rabbit", "Children");
+    firstBook.save();
+    Book secondBook = new Book("The Tale Squirrel Nutkin",
+    "Children");
+    secondBook.save();
+    Book thirdBook = new Book("Appley Dapply's Nursery Rhymes", "Children");
+    thirdBook.save();
+    firstBook.addAuthor(author.getId());
+    secondBook.addAuthor(author.getId());
+    thirdBook.addAuthor(author.getId());
+    Book[] books = new Book[] {firstBook, secondBook, thirdBook};
+    assertTrue(author.getAllBooks().containsAll(Arrays.asList(books)));
+  }
+
 }

@@ -46,4 +46,22 @@ public class GenreTest {
     assertTrue(firstGenre.equals(secondGenre));
   }
 
+  @Test
+  public void getAllBooks_ListsAllBooksRelatedToGenre() {
+    Genre genre = new Genre("Classics");
+    genre.save();
+    Book firstBook = new Book("Peter Rabbit", "Children");
+    firstBook.save();
+    Book secondBook = new Book("Crime and Punishment",
+    "Adult");
+    secondBook.save();
+    Book thirdBook = new Book("Lord of the Rings", "Juvenile");
+    thirdBook.save();
+    firstBook.addGenre(genre.getId());
+    secondBook.addGenre(genre.getId());
+    thirdBook.addGenre(genre.getId());
+    Book[] books = new Book[] {firstBook, secondBook, thirdBook};
+    assertTrue(genre.getAllBooks().containsAll(Arrays.asList(books)));
+  }
+
 }

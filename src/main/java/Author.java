@@ -89,6 +89,16 @@ public class Author {
     }
   }
 
+  public List<Book> getAllBooks() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT books.id AS mId, books.title AS mTitle, books.age_group AS mAgeGroup FROM books INNER JOIN books_authors ON books.id = books_authors.book_id WHERE books_authors.author_id = :id";
+      List<Book> bookList = con.createQuery(sql)
+        .addParameter("id", mId)
+        .executeAndFetch(Book.class);
+      return bookList;
+    }
+  }
+
   // public void enrollIn(int course_id) {
   //   try(Connection con = DB.sql2o.open()) {
   //     String sql = "INSERT INTO enrollments (course_id, student_id, course_completion) VALUES (:courseid, :studentid, false)";
