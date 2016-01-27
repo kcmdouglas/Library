@@ -127,26 +127,5 @@ public class Book {
     }
   }
 
-  // public void passCourse(int course_id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "UPDATE enrollments SET course_completion = true WHERE course_id = :courseid AND student_id = :studentid";
-  //     con.createQuery(sql)
-  //       .addParameter("courseid", course_id)
-  //       .addParameter("studentid", this.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
 
-  //
-  // public Boolean courseIsCompleted(int courseId) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT course_completion FROM enrollments WHERE course_id = :courseid AND student_id = :studentid";
-  //     Boolean result = con.createQuery(sql)
-  //       .addParameter("courseid", courseId)
-  //       .addParameter("studentid", mId)
-  //       .executeScalar(Boolean.class);
-  //     return result;
-  //   }
-  // }
 }

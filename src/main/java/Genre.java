@@ -85,44 +85,5 @@ public class Genre {
     }
   }
 
-  // public void enrollIn(int course_id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO enrollments (course_id, student_id, course_completion) VALUES (:courseid, :studentid, false)";
-  //     con.createQuery(sql)
-  //       .addParameter("courseid", course_id)
-  //       .addParameter("studentid", this.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
-  // public void passCourse(int course_id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "UPDATE enrollments SET course_completion = true WHERE course_id = :courseid AND student_id = :studentid";
-  //     con.createQuery(sql)
-  //       .addParameter("courseid", course_id)
-  //       .addParameter("studentid", this.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
-  // public List<Course> getAllCourses() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT courses.id AS mId, courses.name AS mName, courses.department_id AS mDepartmentId, courses.number AS mNumber FROM courses INNER JOIN enrollments ON courses.id = enrollments.course_id WHERE enrollments.student_id = :id";
-  //     List<Course> courseList = con.createQuery(sql)
-  //       .addParameter("id", mId)
-  //       .executeAndFetch(Course.class);
-  //     return courseList;
-  //   }
-  // }
-  //
-  // public Boolean courseIsCompleted(int courseId) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT course_completion FROM enrollments WHERE course_id = :courseid AND student_id = :studentid";
-  //     Boolean result = con.createQuery(sql)
-  //       .addParameter("courseid", courseId)
-  //       .addParameter("studentid", mId)
-  //       .executeScalar(Boolean.class);
-  //     return result;
-  //   }
-  // }
+
 }
