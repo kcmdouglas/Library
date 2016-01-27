@@ -48,4 +48,32 @@ public class BookTest {
     assertTrue(firstBook.equals(secondBook));
   }
 
+  @Test
+  public void addAuthor_addsAuthorToBooksAuthorsTable() {
+    Book book = new Book("Peter Rabbit", "Children");
+    book.save();
+    Author firstAuthor = new Author("Potter", "Beatrix");
+    firstAuthor.save();
+    Author secondAuthor = new Author("Inspiration", "Inherent");
+    secondAuthor.save();
+    book.addAuthor(firstAuthor.getId());
+    book.addAuthor(secondAuthor.getId());
+    Author[] authors = new Author[] {firstAuthor, secondAuthor};
+    assertTrue(book.getAllAuthors().containsAll(Arrays.asList(authors)));
+  }
+
+  @Test
+  public void addGenre_addsGenreToBooksGenresTable() {
+    Book book = new Book("Peter Rabbit", "Children");
+    book.save();
+    Genre firstGenre = new Genre("Classics");
+    firstGenre.save();
+    Genre secondGenre = new Genre("Picture");
+    secondGenre.save();
+    book.addGenre(firstGenre.getId());
+    book.addGenre(secondGenre.getId());
+    Genre[] genres = new Genre[] {firstGenre, secondGenre};
+    assertTrue(book.getAllGenres().containsAll(Arrays.asList(genres)));
+  }
+
 }

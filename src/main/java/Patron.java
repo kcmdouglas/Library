@@ -20,7 +20,7 @@ public class Patron {
   }
 
   public String getFullName() {
-    return mLastName + ", " + mFirstName;
+    return mFirstName + " " + mLastName;
   }
 
   public Patron(String lastName, String firstName) {

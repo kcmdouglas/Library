@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 import org.sql2o.*;
 
 public class Book {
@@ -86,16 +87,46 @@ public class Book {
     }
   }
 
-  // public void enrollIn(int course_id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO enrollments (course_id, student_id, course_completion) VALUES (:courseid, :studentid, false)";
-  //     con.createQuery(sql)
-  //       .addParameter("courseid", course_id)
-  //       .addParameter("studentid", this.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
+  public void addAuthor(int author_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO books_authors (book_id, author_id) VALUES (:bookId, :authorId)";
+      con.createQuery(sql)
+        .addParameter("bookId", this.getId())
+        .addParameter("authorId", author_id)
+        .executeUpdate();
+    }
+  }
+
+  public List<Author> getAllAuthors() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT authors.id AS mId, authors.last_name AS mLastName, authors.first_name AS mFirstName FROM authors INNER JOIN books_authors ON authors.id = books_authors.author_id WHERE books_authors.book_id = :id";
+      List<Author> authorList = con.createQuery(sql)
+        .addParameter("id", mId)
+        .executeAndFetch(Author.class);
+      return authorList;
+    }
+  }
+
+  public void addGenre(int genre_id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO books_genres (book_id, genre_id) VALUES (:bookId, :genreId)";
+      con.createQuery(sql)
+         .addParameter("bookId", this.getId())
+         .addParameter("genreId", genre_id)
+         .executeUpdate();
+    }
+  }
+
+  public List<Genre> getAllGenres() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT genres.id AS mId, genres.name AS mName FROM genres INNER JOIN books_genres ON genres.id = books_genres.genre_id WHERE books_genres.book_id = :id";
+      List<Genre> genreList = con.createQuery(sql)
+        .addParameter("id", mId)
+        .executeAndFetch(Genre.class);
+      return genreList;
+    }
+  }
+
   // public void passCourse(int course_id) {
   //   try(Connection con = DB.sql2o.open()) {
   //     String sql = "UPDATE enrollments SET course_completion = true WHERE course_id = :courseid AND student_id = :studentid";
@@ -106,15 +137,7 @@ public class Book {
   //   }
   // }
   //
-  // public List<Course> getAllCourses() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT courses.id AS mId, courses.name AS mName, courses.department_id AS mDepartmentId, courses.number AS mNumber FROM courses INNER JOIN enrollments ON courses.id = enrollments.course_id WHERE enrollments.student_id = :id";
-  //     List<Course> courseList = con.createQuery(sql)
-  //       .addParameter("id", mId)
-  //       .executeAndFetch(Course.class);
-  //     return courseList;
-  //   }
-  // }
+
   //
   // public Boolean courseIsCompleted(int courseId) {
   //   try(Connection con = DB.sql2o.open()) {
