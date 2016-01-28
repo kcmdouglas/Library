@@ -74,7 +74,7 @@ public class Checkout {
       return checkout;
     }
   }
-
+//We made an instance of a Checkout using a date, and here we are updating that instance with the Patron ID and the Copy ID
   public void setPatronIdCopyId(int patronId, int copyId) {
     this.mPatronId = patronId;
     this.mCopyId = copyId;

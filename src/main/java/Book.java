@@ -45,6 +45,8 @@ public class Book {
   }
 
   public void save() {
+
+    // If-else statement to account for not allowing book titles (this is done with copy class)
       String sql = "INSERT INTO books(title, age_group) VALUES (:name, :ageGroup)";
       try(Connection con = DB.sql2o.open()) {
         this.mId = (int) con.createQuery(sql, true)
@@ -117,15 +119,6 @@ public class Book {
     }
   }
 
-  public void addCopy() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO copies (book_id, is_available) VALUES (:bookId, true)";
-      con.createQuery(sql)
-         .addParameter("bookId", this.getId())
-         .executeUpdate();
-    }
-  }
-
   public List<Genre> getAllGenres() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT genres.id AS mId, genres.name AS mName FROM genres INNER JOIN books_genres ON genres.id = books_genres.genre_id WHERE books_genres.book_id = :id";
@@ -136,5 +129,17 @@ public class Book {
     }
   }
 
+  public void addCopy() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO copies (book_id, is_available) VALUES (:bookId, true)";
+      con.createQuery(sql)
+         .addParameter("bookId", this.getId())
+         .executeUpdate();
+    }
+  }
+
+// RETURN LIST OF COPIES
+
+// RETURN single instance of a copy of a book
 
 }

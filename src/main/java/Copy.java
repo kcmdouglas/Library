@@ -21,52 +21,42 @@ public class Copy {
     return mBookId;
   }
 
-  public String getDueDate() {
-    return mDueDate;
+  public Copy(int bookId, boolean isAvailable) {
+    this.mBookId = bookId;
+    // this.mIsAvailable = isAvailable;
+    // isAvailable = true;
+
   }
 
-  public Checkout(String checkoutDate, String dueDate) {
-    this.mCheckoutDate = checkoutDate;
-    this.mDueDate = dueDate;
-  }
+  //Edit these to reflect changes in contrustor (i.e. inputting a book ID, isAvailable boolean--if only GitHub was up...)
 
-  @Override
-  public boolean equals(Object otherCheckout) {
-    if (!(otherCheckout instanceof Checkout)) {
-      return false;
-    } else {
-      Checkout newCheckout = (Checkout) otherCheckout;
-      return this.getCheckoutDate().equals(newCheckout.getCheckoutDate()) &&
-             this.getDueDate().equals(newCheckout.getDueDate());
-    }
-  }
-
-  public static List<Checkout> all() {
-    String sql = "SELECT id AS mId, patron_id AS mPatronId, copy_id AS mCopyId, checkout_date AS mCheckoutDate, due_date AS mDueDate FROM checkouts";
-    try(Connection con = DB.sql2o.open()) {
-      return con.createQuery(sql).executeAndFetch(Checkout.class);
-    }
-  }
-
-  public void save() {
-    String sql = "INSERT INTO checkouts(checkout_date, due_date) VALUES (TO_DATE (:checkoutDate, 'yyyy-mm-dd'), TO_DATE (:dueDate, 'yyyy-mm-dd'))";
-    try(Connection con = DB.sql2o.open()) {
-      this.mId = (int) con.createQuery(sql, true)
-          .addParameter("checkoutDate", this.mCheckoutDate)
-          .addParameter("dueDate", this.mDueDate)
-          .executeUpdate()
-          .getKey();
-    }
-  }
-
-  public static Checkout find(int id) {
-      String sql = "SELECT id AS mId, patron_id AS mPatronId, copy_id AS mCopyId, checkout_date AS mCheckoutDate, due_date AS mDueDate FROM checkouts WHERE id = :id";
-      try(Connection con = DB.sql2o.open()) {
-        Checkout checkout = con.createQuery(sql)
-        .addParameter("id", id)
-        .executeAndFetchFirst(Checkout.class);
-      return checkout;
-    }
-  }
+  // public static List<Copy> all() {
+  //   String sql = "SELECT id AS mId, book_id AS mBookId is_available AS isAvailable FROM copies";
+  //   try(Connection con = DB.sql2o.open()) {
+  //     return con.createQuery(sql).executeAndFetch(Copy.class);
+  //   }
+  // }
+  //
+  //
+  // public void save() {
+  //   String sql = "INSERT INTO copies (book_id, is_available) VALUES (:bookId, :isAvailable))";
+  //   try(Connection con = DB.sql2o.open()) {
+  //     this.mId = (int) con.createQuery(sql, true)
+  //         .addParameter("checkoutDate", this.mCopyDate)
+  //         .addParameter("dueDate", this.mDueDate)
+  //         .executeUpdate()
+  //         .getKey();
+  //   }
+  // }
+  //
+  // public static Copy find(int id) {
+  //     String sql = "SELECT id AS mId, patron_id AS mPatronId, copy_id AS mCopyId, checkout_date AS mCopyDate, due_date AS mDueDate FROM copies WHERE id = :id";
+  //     try(Connection con = DB.sql2o.open()) {
+  //       Copy checkout = con.createQuery(sql)
+  //       .addParameter("id", id)
+  //       .executeAndFetchFirst(Copy.class);
+  //     return checkout;
+  //   }
+  // }
 
 }
