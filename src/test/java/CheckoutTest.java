@@ -25,6 +25,6 @@ public class CheckoutTest {
     copy.save();
     patron.checkout(copy.getId());
     Checkout newCheckout = Checkout.all().get(0);
-    assertEquals(newCheckout.find(newCheckout.getId()), Checkout.all().size());
+    assertEquals(patron.getAllCheckouts().size(), Checkout.all().size());
   }
 }
