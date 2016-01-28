@@ -44,8 +44,21 @@ public class Book {
     }
   }
 
-  public void save() {
+  //
+  // public boolean isDuplicate() {
+  //   for (Book book: Book.all()) {
+  //     if(this.getTitle() == book.getTitle()) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  // }
 
+  public void save() {
+    // if(this.isDuplicate()) {
+    //   this.addCopy();
+    // } else {
     // If-else statement to account for not allowing book titles (this is done with copy class)
       String sql = "INSERT INTO books(title, age_group) VALUES (:name, :ageGroup)";
       try(Connection con = DB.sql2o.open()) {
@@ -55,6 +68,7 @@ public class Book {
           .executeUpdate()
           .getKey();
       }
+    //}
   }
 
     public static Book find(int id) {
@@ -129,17 +143,16 @@ public class Book {
     }
   }
 
-  public void addCopy() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO copies (book_id, is_available) VALUES (:bookId, true)";
-      con.createQuery(sql)
-         .addParameter("bookId", this.getId())
-         .executeUpdate();
-    }
-  }
-
 // RETURN LIST OF COPIES
 
-// RETURN single instance of a copy of a book
+public List<Copy> getAllCopies() {
+  String sql = "SELECT id AS mId, book_id AS mBookId, is_available AS mIsAvailable FROM copies WHERE book_id = :bookId";
+  try(Connection con = DB.sql2o.open()) {
+    List<Copy> copyList = con.createQuery(sql)
+      .addParameter("bookId", mId)
+      .executeAndFetch(Copy.class);
+    return copyList;
+  }
+}
 
 }

@@ -76,4 +76,18 @@ public class BookTest {
     assertTrue(book.getAllGenres().containsAll(Arrays.asList(genres)));
   }
 
+  @Test
+  public void getAllCopies_addsCopyOfBookToCopiesTable() {
+    Book book = new Book("Peter Rabbit", "Children");
+    book.save();
+    Copy copyOne = new Copy(book.getId());
+    copyOne.save();
+    Copy copyTwo = new Copy(book.getId());
+    copyTwo.save();
+    Copy[] copies = new Copy[] {copyOne, copyTwo};
+    assertEquals(book.getAllCopies().size(), 2);
+    assertEquals(book.getAllCopies().get(0).getIsAvailable(), true);
+
+  }
+
 }
