@@ -45,14 +45,14 @@ public class Book {
   }
 
   public void save() {
-    String sql = "INSERT INTO books(title, age_group) VALUES (:name, :ageGroup)";
-    try(Connection con = DB.sql2o.open()) {
-      this.mId = (int) con.createQuery(sql, true)
-        .addParameter("name", this.mTitle)
-        .addParameter("ageGroup", this.mAgeGroup)
-        .executeUpdate()
-        .getKey();
-    }
+      String sql = "INSERT INTO books(title, age_group) VALUES (:name, :ageGroup)";
+      try(Connection con = DB.sql2o.open()) {
+        this.mId = (int) con.createQuery(sql, true)
+          .addParameter("name", this.mTitle)
+          .addParameter("ageGroup", this.mAgeGroup)
+          .executeUpdate()
+          .getKey();
+      }
   }
 
     public static Book find(int id) {
@@ -107,12 +107,21 @@ public class Book {
     }
   }
 
-  public void addGenre(int genre_id) {
+  public void addGenre(int genreId) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO books_genres (book_id, genre_id) VALUES (:bookId, :genreId)";
       con.createQuery(sql)
          .addParameter("bookId", this.getId())
-         .addParameter("genreId", genre_id)
+         .addParameter("genreId", genreId)
+         .executeUpdate();
+    }
+  }
+
+  public void addCopy() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO copies (book_id, is_available) VALUES (:bookId, true)";
+      con.createQuery(sql)
+         .addParameter("bookId", this.getId())
          .executeUpdate();
     }
   }

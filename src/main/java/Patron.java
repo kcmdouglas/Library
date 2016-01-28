@@ -89,17 +89,4 @@ public class Patron {
     }
   }
 
-  // public void checkout(int mId, int copyId, String checkoutDate, String dueDate) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO checkouts(patron_id, copy_id, checkout_date, due_date) VALUES (:id, :copyId) TO_DATE (:checkoutDate, 'yyyy-mm-dd') TO DATE (:dueDate, 'yyyy-mm-dd')";
-  //     con.createQuery(sql)
-  //       .addParameter("id", mId)
-  //       .addParameter("copyId", copyId)
-  //       .addParameter("checkoutDate", checkoutDate)
-  //       .addParameter("dueDate", dueDate)
-  //       .addParameter("id", mId)
-  //       .executeUpdate();
-  //
-  // }
-
 }

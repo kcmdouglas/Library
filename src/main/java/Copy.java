@@ -3,28 +3,22 @@ import java.util.List;
 import java.util.Arrays;
 import org.sql2o.*;
 
-public class Checkout {
+public class Copy {
 
   private int mId;
-  private int mPatronId;
-  private int mCopyId;
-  private String mCheckoutDate;
-  private String mDueDate;
+  private boolean mIsAvailable;
+  private int mBookId;
 
   public int getId() {
     return mId;
   }
 
-  public int getPatronId() {
-    return mPatronId;
+  public boolean getIsAvailable() {
+    return mIsAvailable;
   }
 
-  public int getCopyId() {
-    return mCopyId;
-  }
-
-  public String getCheckoutDate() {
-    return mCheckoutDate;
+  public int getBookId() {
+    return mBookId;
   }
 
   public String getDueDate() {
@@ -72,19 +66,6 @@ public class Checkout {
         .addParameter("id", id)
         .executeAndFetchFirst(Checkout.class);
       return checkout;
-    }
-  }
-
-  public void setPatronIdCopyId(int patronId, int copyId) {
-    this.mPatronId = patronId;
-    this.mCopyId = copyId;
-    String sql = "UPDATE checkouts SET patron_id = :patronId, copy_id = :copyId WHERE id = :id";
-    try(Connection con = DB.sql2o.open()) {
-      con.createQuery(sql)
-         .addParameter("patronId", patronId)
-         .addParameter("copyId", copyId)
-         .addParameter("id", mId)
-         .executeUpdate();
     }
   }
 

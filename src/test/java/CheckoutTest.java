@@ -31,4 +31,16 @@ public class CheckoutTest {
     assertTrue(firstCheckout.equals(secondCheckout));
   }
 
+  @Test
+  public void setPatronIdCopyId_updatesCheckoutInstanceToIncludePatronIdAndCopyId() {
+    Checkout firstCheckout = new Checkout("2016-01-27", "2016-02-15");
+    firstCheckout.save();
+    Patron patron = new Patron("Baggins", "Baggins");
+    patron.save();
+    Book book = new Book("There And Back Again", "Adult");
+    book.save().addCopy();
+    
+    assertTrue();
+  }
+
 }
