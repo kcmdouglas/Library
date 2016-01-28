@@ -48,4 +48,17 @@ public class PatronTest {
     assertTrue(firstPatron.equals(secondPatron));
   }
 
+  @Test
+  public void checkout_CreatesANewCheckout() {
+    Patron patron = new Patron("Baggins", "Bilbo");
+    patron.save();
+    Book book = new Book("There And Back Again", "Adult");
+    book.save();
+    Copy copy = new Copy(book.getId());
+    copy.save();
+    patron.checkout(copy.getId());
+    Checkout newCheckout = Checkout.all().get(0);
+    assertEquals(patron.getId(), newCheckout.getPatronId());
+  }
+
 }

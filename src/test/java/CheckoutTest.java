@@ -14,33 +14,17 @@ public class CheckoutTest {
     assertEquals(Checkout.all().size(), 0);
   }
 
-  @Test
-  public void checkout_instantiateWithCheckoutDateAndDueDate() {
-    Checkout checkout = new Checkout("2016-01-27", "2016-02-15");
-    checkout.save();
-    assertEquals("2016-01-27", Checkout.find(checkout.getId()).getCheckoutDate());
-    assertEquals("2016-02-15", Checkout.find(checkout.getId()).getDueDate());
-  }
 
   @Test
-  public void equals_returnsTrueIfSameTitleAndAgeGroup() {
-    Checkout firstCheckout = new Checkout("2016-01-27", "2016-02-15");
-    firstCheckout.save();
-    Checkout secondCheckout = new Checkout("2016-01-27", "2016-02-15");
-    secondCheckout.save();
-    assertTrue(firstCheckout.equals(secondCheckout));
+  public void find_findsInstanceOfCheckout() {
+    Patron patron = new Patron("Baggins", "Bilbo");
+    patron.save();
+    Book book = new Book("There And Back Again", "Adult");
+    Copy copy = new Copy(book.getId());
+    book.save();
+    copy.save();
+    patron.checkout(copy.getId());
+    Checkout newCheckout = Checkout.all().get(0);
+    assertEquals(newCheckout.find(newCheckout.getId()), Checkout.all().size());
   }
-
-  // @Test
-  // public void setPatronIdCopyId_updatesCheckoutInstanceToIncludePatronIdAndCopyId() {
-  //   Checkout firstCheckout = new Checkout("2016-01-27", "2016-02-15");
-  //   firstCheckout.save();
-  //   Patron patron = new Patron("Baggins", "Baggins");
-  //   patron.save();
-  //   Book book = new Book("There And Back Again", "Adult");
-  //   book.save().addCopy();
-  //
-  //   assertTrue();
-  // }
-
 }

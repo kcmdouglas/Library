@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import org.sql2o.*;
+import java.time.LocalDate;
 
 public class Patron {
   private int mId;
@@ -86,6 +87,28 @@ public class Patron {
         .addParameter("firstName", newFirstName)
         .addParameter("id", mId)
         .executeUpdate();
+    }
+  }
+
+  public void checkout(int copyId) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO checkouts (patron_id, copy_id, checkout_date, due_date) VALUES (:patronId, :copyId, TO_DATE (:checkOutDate, 'yyyy-mm-dd'), TO_DATE(:dueDate, 'yyyy-mm-dd'))";
+      con.createQuery(sql)
+         .addParameter("patronId", mId)
+         .addParameter("copyId", copyId)
+         .addParameter("checkOutDate", LocalDate.now().toString())
+         .addParameter("dueDate", LocalDate.now().plusWeeks(3).toString())
+         .executeUpdate();
+    }
+  }
+
+  public List<Checkout> getAllCheckouts() {
+    String sql = "SELECT id AS mId, patron_id AS mPatronId, copy_id AS mCopyId, checkout_date AS mCheckoutDate, due_date AS mDueDate FROM checkouts WHERE patron_id = :patronId";
+    try(Connection con = DB.sql2o.open()) {
+      List<Checkout> checkoutList = con.createQuery(sql)
+        .addParameter("patronId", mId)
+        .executeAndFetch(Checkout.class);
+      return checkoutList;
     }
   }
 
