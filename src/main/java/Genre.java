@@ -57,10 +57,17 @@ public class Genre {
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
-      String delete = "DELETE FROM genres WHERE id = :id";
-      con.createQuery(delete)
-        .addParameter("id", mId)
-        .executeUpdate();
+    String deleteGenreConnection = "DELETE FROM books_genres WHERE books_genres.genre_id = :id;";
+    con.createQuery(deleteGenreConnection)
+      .addParameter("id", mId)
+      .executeUpdate();
+    }
+
+    try(Connection con = DB.sql2o.open()) {
+    String deleteGenre = "DELETE FROM genre WHERE id = :id;";
+    con.createQuery(deleteGenre)
+      .addParameter("id", mId)
+      .executeUpdate();
     }
   }
 

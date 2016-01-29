@@ -1,0 +1,22 @@
+<h1>$author.getFullName()</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Age Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach ($book in $author.getAllBooks())
+      <tr>
+        <td><a href="/book/$book.getId()">$book.getTitle()</a></td>
+        #foreach ($genre in $book.getAllGenres())
+          <td><a href="/genre/$genre.getId()">$genre.getName()</a></td>
+        #end
+        <td>$book.getAgeGroup()</td>
+      </tr>
+    #end
+  </tbody>
+</table>

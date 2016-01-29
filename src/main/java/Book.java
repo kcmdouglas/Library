@@ -83,6 +83,20 @@ public class Book {
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
+    String deleteBookConnection = "DELETE FROM books_authors WHERE books_authors.book_id = :id;";
+    con.createQuery(deleteBookConnection)
+      .addParameter("id", mId)
+      .executeUpdate();
+    }
+
+    try(Connection con = DB.sql2o.open()) {
+    String deleteBookConnection = "DELETE FROM books_genres WHERE books_genres.book_id = :id;";
+    con.createQuery(deleteBookConnection)
+      .addParameter("id", mId)
+      .executeUpdate();
+    }
+
+    try(Connection con = DB.sql2o.open()) {
     String deleteBook = "DELETE FROM books WHERE id = :id;";
     con.createQuery(deleteBook)
       .addParameter("id", mId)
@@ -110,16 +124,6 @@ public class Book {
         .addParameter("bookId", this.getId())
         .addParameter("authorId", author_id)
         .executeUpdate();
-    }
-  }
-
-  public List<Author> getAllAuthors() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT authors.id AS mId, authors.last_name AS mLastName, authors.first_name AS mFirstName FROM authors INNER JOIN books_authors ON authors.id = books_authors.author_id WHERE books_authors.book_id = :id";
-      List<Author> authorList = con.createQuery(sql)
-        .addParameter("id", mId)
-        .executeAndFetch(Author.class);
-      return authorList;
     }
   }
 
@@ -154,5 +158,36 @@ public List<Copy> getAllCopies() {
     return copyList;
   }
 }
+
+public List<Author> getAllAuthors() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "SELECT authors.id AS mId, authors.last_name AS mLastName, authors.first_name AS mFirstName FROM authors INNER JOIN books_authors ON authors.id = books_authors.author_id WHERE books_authors.book_id = :id";
+    List<Author> authorList = con.createQuery(sql)
+      .addParameter("id", mId)
+      .executeAndFetch(Author.class);
+    return authorList;
+  }
+}
+
+public List<Author> getAllAuthorsLastName() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "SELECT authors.id AS mId, authors.last_name AS mLastName FROM authors INNER JOIN books_authors ON authors.id = books_authors.author_id WHERE books_authors.book_id = :id";
+    List<Author> authorLastList = con.createQuery(sql)
+      .addParameter("id", mId)
+      .executeAndFetch(Author.class);
+    return authorLastList;
+  }
+}
+public List<Author> getAllAuthorsFirstName() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "SELECT authors.id AS mId, authors.first_name AS mFirstName FROM authors INNER JOIN books_authors ON authors.id = books_authors.author_id WHERE books_authors.book_id = :id";
+    List<Author> authorFirstList = con.createQuery(sql)
+      .addParameter("id", mId)
+      .executeAndFetch(Author.class);
+    return authorFirstList;
+  }
+}
+
+
 
 }

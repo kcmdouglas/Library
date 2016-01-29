@@ -1,0 +1,39 @@
+<h1>$author.getFullName()</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Age Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach ($book in $author.getAllBooks())
+      <tr>
+        <td><a href="/admin/book/$book.getId()">$book.getTitle()</a></td>
+        #foreach ($genre in $book.getAllGenres())
+          <td>$genre.getName()</td>
+        #end
+        <td>$book.getAgeGroup()</td>
+      </tr>
+    #end
+  </tbody>
+</table>
+
+<form action="/books/update" method="post">
+  <h5>Assign a Genre to a Book</h5>
+  <div class="form-group">
+    <label for="book-select">Select a Book</label>
+    <select class="bookId" name="bookId" type="text">
+      #foreach($book in $books)
+        <option value="$book.getId()">$book.getTitle()</option>
+      #end
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="genre-add">Add a Genre</label>
+    <input id="name" name="name" type="text">
+  </div>
+  <button type="submit" class="btn btn-primary">Assign Genre</button>
+</form>

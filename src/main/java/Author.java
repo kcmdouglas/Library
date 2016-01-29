@@ -69,10 +69,17 @@ public class Author {
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
-      String delete = "DELETE FROM authors WHERE id = :id";
-      con.createQuery(delete)
-        .addParameter("id", mId)
-        .executeUpdate();
+    String deleteAuthorConnection = "DELETE FROM books_authors WHERE books_authors.author_id = :id;";
+    con.createQuery(deleteAuthorConnection)
+      .addParameter("id", mId)
+      .executeUpdate();
+    }
+
+    try(Connection con = DB.sql2o.open()) {
+    String deleteAuthor = "DELETE FROM author WHERE id = :id;";
+    con.createQuery(deleteAuthor)
+      .addParameter("id", mId)
+      .executeUpdate();
     }
   }
 

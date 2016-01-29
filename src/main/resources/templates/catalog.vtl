@@ -1,0 +1,29 @@
+<h1>Full Catalog</h1>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Author's Last Name </th>
+        <th>Author's First Name</th>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Age Group</th>
+      </tr>
+    </thead>
+    <tbody>
+      #foreach ($book in $books)
+        <tr>
+          #foreach ($lastName in $book.getAllAuthorsLastName())
+            <td><a href="/author/$lastName.getId()"> $lastName.getLastName()</a></td>
+          #end
+          #foreach ($firstName in $book.getAllAuthorsFirstName())
+            <td><a href="/author/$firstName.getId()">$firstName.getFirstName()</a></td>
+          #end
+          <td><a href="/book/$book.getId()">$book.getTitle()</a></td>
+          #foreach ($genre in $book.getAllGenres())
+            <td>$genre.getName()</td>
+          #end
+          <td>$book.getAgeGroup()</td>
+        </tr>
+      #end
+    </tbody>
+  </table>
