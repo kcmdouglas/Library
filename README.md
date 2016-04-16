@@ -1,11 +1,12 @@
-# Registrar
+# Libary
 
 #### January 26, 2016
 
-#### By Jeffrey Ruder and Kassidy Douglas
+#### By Midori Bowen and Kassidy Douglas
 
 ## Description
 
+This applicaiton is used to catalog books, allow users to search books, make user profiles, and keep track of all check-ins and check-outs.
 
 ## Technologies Used
 
